@@ -1,0 +1,9 @@
+body {
+  /* background-image: url("/assets/background.jpg"); */
+  background-size: cover;
+}
+
+form {
+    border-color: black;
+    border-radius: 8px;
+}

@@ -1,0 +1,123 @@
+@media (min-width: 1001px) {
+  body {
+    background-image: url("/assets/background.jpg");
+    background-size: cover;
+  }
+
+  button {
+    background-color: #506cbf;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    height: 50px;
+    width: 200px;
+
+    transition: transform 500ms ease-in-out-back,
+      background-position 800ms ease-in-out-back, box-shadow 500ms linear;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+}
+
+@media (max-width: 1000px) {
+  body {
+    background-image: url("/assets/background2.jpg");
+    background-size: 1640px;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+
+  h3 {
+    font-size: 25px;
+  }
+
+  img {
+    margin-right: 20px;
+    margin-top: 15px;
+  }
+
+  .bouttons {
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  button {
+    background-color: #506cbf;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    height: 100px;
+    width: 400px;
+    font-size: 35px;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  button:active {
+    transform: scale(1);
+    background-position: 500px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  #connexion {
+    margin-bottom: 50px;
+  }
+}
+
+h1,h3 {
+  text-align: center;
+}
+
+.titre {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-right: 40px;
+  margin-top: 20px;
+}
+
+img {
+  margin-right: 20px;
+}
+
+h1 {
+  margin-top: 30px;
+}
+
+h3 {
+  margin: auto;
+}
+
+.bouttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background-position: -60px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+button:active {
+  transform: scale(1);
+  background-position: 500px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#connexion {
+  margin-right: 50px;
+}
