@@ -1,4 +1,31 @@
-body {
-    /* background-image: url("/assets/background.jpg"); */
+@media (min-width: 1001px) {
+  body {
+    background-image: url("/assets/img/background.jpg");
     background-size: cover;
   }
+}
+
+h1,h3 {
+  text-align: center;
+}
+
+.titre {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-right: 40px;
+  margin-top: 20px;
+}
+
+img {
+  margin-right: 20px;
+}
+
+h1 {
+  margin-top: 30px;
+}
+
+h3 {
+  margin: auto;
+} 
+
