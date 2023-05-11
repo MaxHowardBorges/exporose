@@ -150,4 +150,8 @@
         flex-direction: initial;
         justify-content: center;
     }
+
+    #logo {
+        cursor: pointer;
+    }
 }

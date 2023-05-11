@@ -20,14 +20,10 @@ h1, h3 {
     text-align: center;
 }
 
-.table {
-    margin: auto;
-}
-
-.styled-table {
+.styled-table{
     background-color: #ffffff;
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: auto;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
@@ -55,4 +51,56 @@ h1, h3 {
 
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #506cbf;
+}
+
+.styled-table td:nth-last-child(-n+2) {
+    background-color: unset;
+}
+
+button {
+    background-color: #506cbf;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    height: 35px;
+    width: 100px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.supp {
+    background-color: #8A0210;
+}
+
+#ajout {
+    background-color: #018A04;
+}
+
+button:hover {
+    transform: scale(1.02);
+    background-position: -60px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+button:active {
+    transform: scale(1);
+    background-position: 500px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.password-container{
+    position: relative;
+}
+.password-container input[type="password"],
+.password-container input[type="text"]{
+    width: 100%;
+    box-sizing: border-box;
+}
+.fa-eye{
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+    color: lightgray;
 }
