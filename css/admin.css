@@ -1,6 +1,6 @@
-@font-face{
+@font-face {
     font-family: "Roboto";
-    src : url(/assets/font/Roboto/Roboto-Regular.ttf);
+    src: url(/assets/font/Roboto/Roboto-Regular.ttf);
 }
 
 @media (min-width: 1001px) {
@@ -76,7 +76,7 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
-    .vertical-line{
+    .vertical-line {
         border-left: 5px solid #000;
         display: inline-block;
         border-radius: 5px;
@@ -86,7 +86,6 @@
 
     #buttons1 {
         align-items: center;
-        float: left;
         display: flex;
         flex-wrap: wrap;
         flex-direction: initial;
@@ -94,27 +93,58 @@
 
     }
 
-    #div1 {
+    #div{
+        display: flex;
+        flex-direction: initial;
+        align-items: center;
+    }
+
+    #div1{
+        width: 50%;
         display: flex;
         flex-direction: initial;
         align-items: center;
         justify-content: center;
     }
 
+    #div2{
+        width: 50%;
+        display: flex;
+        flex-direction: initial;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #container {
+        width: 400px;
+        margin: 0 auto;
+        margin-top: 10%;
+    }
+
+    /* Bordered form */
+    #buttons1 {
+
+        padding: 30px 30px;
+        border: 1px solid #f1f1f1;
+        background: #fff;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
 
     #buttons1 button {
+        margin-top: 30px;
+        margin-bottom: 30px;
         width: 47% /* pour avoir 2 boutons par ligne */
     }
 
-    button{
-        margin-top: 100px;
+    button {
+        margin: auto;
         margin-inline: 10px;
     }
 
 
-    .buttons2{
+    .buttons2 {
         align-items: center;
-        float: left;
         display: flex;
         flex-wrap: wrap;
         flex-direction: initial;
