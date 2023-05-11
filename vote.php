@@ -23,7 +23,7 @@
         echo '<div id="bloc">';
         echo '<label for="n_bouquet">' . $id_bouquet . ' </label>';
         echo '<label for="note">Note : </label>';
-        echo '<input type="number" id="note" name="note[]" min="0" max="20">';
+        echo '<input type="number" id="note" name="note[]" min="0" max="20" required>';
         echo '</div>';
       }
       ?>
