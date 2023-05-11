@@ -159,11 +159,16 @@
     margin-inline: 10px;
   }
 
-  .buttons2 {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: initial;
-    justify-content: center;
-  }
+
+    .buttons2 {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: initial;
+        justify-content: center;
+    }
+
+    #logo {
+        cursor: pointer;
+    }
 }
