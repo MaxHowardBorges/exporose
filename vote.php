@@ -15,7 +15,7 @@
   <div id="container">
     <form action="enregistrerVote.php" method="POST">
       <?php
-      require "bd.php";
+      require_once "bd.php";
       $db = createDbConnection();
       $query = mysqli_query($db, "SELECT * FROM bouquet;");
       while ($row = mysqli_fetch_assoc($query)) {

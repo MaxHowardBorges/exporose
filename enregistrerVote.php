@@ -1,22 +1,9 @@
 <?php
-require "bd.php";
+require_once "bd.php";
+require_once "increment.php";
 $db = createDbConnection();
-$increment = mysqli_query($db, "SELECT MAX(id_jury) FROM jury");
-$rowincrement = mysqli_fetch_assoc($increment);
-$idincrement = $rowincrement['MAX(id_jury)'];
-if ($idincrement) {
-    $autoincrement = mysqli_query($db, "ALTER TABLE jury AUTO_INCREMENT = $idincrement");
-} else {
-    $autoincrement = mysqli_query($db, "ALTER TABLE jury AUTO_INCREMENT = 1");
-}
-$increment = mysqli_query($db, "SELECT MAX(id_note) FROM note");
-$rowincrement = mysqli_fetch_assoc($increment);
-$idincrement = $rowincrement['MAX(id_note)'];
-if ($idincrement) {
-    $autoincrement = mysqli_query($db, "ALTER TABLE note AUTO_INCREMENT = $idincrement");
-} else {
-    $autoincrement = mysqli_query($db, "ALTER TABLE note AUTO_INCREMENT = 1");
-}
+InitialiserIncrement("jury");
+InitialiserIncrement("note");
 $note = $_POST['note'] ?? $_GET['note'];
 $nomjuryResult = mysqli_query($db, "SELECT nom_jury FROM jury WHERE id_jury= (SELECT MAX(id_jury) FROM jury);");
 $nomjuryRow = mysqli_fetch_assoc($nomjuryResult);
