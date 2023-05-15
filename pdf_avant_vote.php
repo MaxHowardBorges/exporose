@@ -1,13 +1,17 @@
 <?php
 
 require_once('TCPDF/tcpdf.php');
+require_once "bd.php";
+
+$db = createDbConnection();
 
 class MYPDF extends TCPDF
 {
-    public function Header() {
-        // Logo
-        $this->Image('assets/img/logo.png', 5, 3, 38.6);
-        // Title
+	public function Header()
+	{
+		// Logo
+		$this->Image('assets/img/logo.png', 5, 3, 38.6);
+		// Title
 		// set font
 		$this->SetFont('times', 'U', 16);
 
@@ -15,14 +19,14 @@ class MYPDF extends TCPDF
 		$this->SetFillColor(255, 255, 255);
 
 		$this->SetX($this->GetX() + 70);
-		$this->MultiCell(55, 5, '50ème EXPOSITION', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+		$this->MultiCell(55, 5, '51ème EXPOSITION', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 		$this->SetY($this->GetY() + 10);
 		$this->SetX($this->GetX() + 65);
 		$this->MultiCell(65, 5, 'INTERNATIONALE DE', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 		$this->SetY($this->GetY() + 10);
 		$this->SetX($this->GetX() + 85);
 		$this->MultiCell(25, 5, 'ROSES', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
-    }
+	}
 }
 
 // create new PDF document
@@ -46,36 +50,62 @@ $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-// add a page
-$pdf->AddPage();
+// add pages
+$query = mysqli_query($db, "SELECT COUNT(id_bouquet) FROM bouquet;");
+$result = mysqli_fetch_array($query);
+$bouquet = $result[0];
 
-// set color for background
-$pdf->SetFillColor(255, 255, 255);
+$query2 = mysqli_query($db, "SELECT nom_producteur from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur;");
 
-$pdf->SetFont('times', '', 30);
-$pdf->SetY($pdf->GetY() + 30);
-$pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Prix»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
-$pdf->SetFont('times', '', 26);
-$pdf->SetY($pdf->GetY() + 30);
-$pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Participant»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
-$pdf->SetFont('times', '', 30);
-$pdf->SetY($pdf->GetY() + 30);
-$pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Variété»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
-$pdf->SetFont('times', '', 20);
-$pdf->SetY($pdf->GetY() + 30);
-$pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Ville»', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+$query3 = mysqli_query($db, "SELECT prenom_producteur from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur;");
 
-$pdf->setPrintHeader(false);
-$pdf->AddPage();
+$query4 = mysqli_query($db, "SELECT nom_variete from bouquet;");
 
-$pdf->SetFont('times', '', 20);
-$pdf->SetY($pdf->GetY() + 60);
-$pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Numéro»', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+$query_ville = mysqli_query($db, "SELECT ville from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur;");
+
+for ($i = 1; $i <= $bouquet; $i++) {
+	$row = mysqli_fetch_array($query2);
+	$nom = $row['nom_producteur'];
+
+	$row2 = mysqli_fetch_array($query3);
+	$prenom = $row2['prenom_producteur'];
+
+	$row3 = mysqli_fetch_array($query4);
+	$variete = $row3['nom_variete'];
+
+	$row_ville = mysqli_fetch_array($query_ville);
+	$ville_bouquet = $row_ville['ville'];
+
+	$pdf->setPrintHeader(true);
+	$pdf->AddPage();
+
+	// set color for background
+	$pdf->SetFillColor(255, 255, 255);
+
+	$pdf->SetFont('times', '', 30);
+	$pdf->SetY($pdf->GetY() + 30);
+	$pdf->SetX($pdf->GetX() + -5);
+	$pdf->MultiCell(130, 5, $nom, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->SetFont('times', '', 26);
+	$pdf->SetY($pdf->GetY() + 30);
+	$pdf->SetX($pdf->GetX() + -5);
+	$pdf->MultiCell(130, 5, $prenom, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->SetFont('times', '', 30);
+	$pdf->SetY($pdf->GetY() + 30);
+	$pdf->SetX($pdf->GetX() + -5);
+	$pdf->MultiCell(130, 5, $variete, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->SetFont('times', '', 20);
+	$pdf->SetY($pdf->GetY() + 30);
+	$pdf->SetX($pdf->GetX() + -5);
+	$pdf->MultiCell(130, 5, $ville_bouquet, 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+
+	$pdf->setPrintHeader(false);
+	$pdf->AddPage();
+
+	$pdf->SetFont('times', '', 20);
+	$pdf->SetY($pdf->GetY() + 60);
+	$pdf->SetX($pdf->GetX() + -5);
+	$pdf->MultiCell(130, 5, '«Numéro»', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+}
 
 $pdf->Output();
-?>

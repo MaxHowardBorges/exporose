@@ -1,6 +1,9 @@
 <?php
 
 require_once('TCPDF/tcpdf.php');
+require_once "bd.php";
+
+$db = createDbConnection();
 
 class MYPDF extends TCPDF
 {
@@ -15,7 +18,7 @@ class MYPDF extends TCPDF
 		$this->SetFillColor(255, 255, 255);
 
 		$this->SetX($this->GetX() + 70);
-		$this->MultiCell(55, 5, '50ème EXPOSITION', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+		$this->MultiCell(55, 5, '51ème EXPOSITION', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 		$this->SetY($this->GetY() + 10);
 		$this->SetX($this->GetX() + 65);
 		$this->MultiCell(65, 5, 'INTERNATIONALE DE', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
@@ -47,6 +50,11 @@ $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 // add a page
+$query = mysqli_query($db, "SELECT COUNT(id_palmares) FROM palmares;");
+$result = mysqli_fetch_array($query);
+$prix = $result[0];
+for($i=1;$i<=$prix;$i++){
+$pdf->setPrintHeader(true);
 $pdf->AddPage();
 
 // set color for background
@@ -55,18 +63,30 @@ $pdf->SetFillColor(255, 255, 255);
 $pdf->SetFont('times', '', 30);
 $pdf->SetY($pdf->GetY() + 30);
 $pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Nom_Producteurs»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+$query = mysqli_query($db, "SELECT COUNT(id_palmares) FROM palmares;");
+$result = mysqli_fetch_array($query);
+$prix = $result[0];
+$pdf->MultiCell(130, 5, '«Prix»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 $pdf->SetFont('times', '', 26);
 $pdf->SetY($pdf->GetY() + 30);
 $pdf->SetX($pdf->GetX() + -5);
-$pdf->MultiCell(130, 5, '«Prénom_Producteurs»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+$query = mysqli_query($db, "SELECT COUNT(id_palmares) FROM palmares;");
+$result = mysqli_fetch_array($query);
+$prix = $result[0];
+$pdf->MultiCell(130, 5, '«Participant»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 $pdf->SetFont('times', '', 30);
 $pdf->SetY($pdf->GetY() + 30);
 $pdf->SetX($pdf->GetX() + -5);
+$query = mysqli_query($db, "SELECT COUNT(id_palmares) FROM palmares;");
+$result = mysqli_fetch_array($query);
+$prix = $result[0];
 $pdf->MultiCell(130, 5, '«Variétés_Roses»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 $pdf->SetFont('times', '', 20);
 $pdf->SetY($pdf->GetY() + 30);
 $pdf->SetX($pdf->GetX() + -5);
+$query = mysqli_query($db, "SELECT COUNT(id_palmares) FROM palmares;");
+$result = mysqli_fetch_array($query);
+$prix = $result[0];
 $pdf->MultiCell(130, 5, '«Ville»', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
 
 $pdf->setPrintHeader(false);
@@ -76,6 +96,7 @@ $pdf->SetFont('times', '', 20);
 $pdf->SetY($pdf->GetY() + 60);
 $pdf->SetX($pdf->GetX() + -5);
 $pdf->MultiCell(130, 5, '«Numéro»', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+}
 
 $pdf->Output();
 ?>

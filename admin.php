@@ -30,7 +30,8 @@
     </div>
     <div id="div2">
       <class id="buttons2">
-        <button>Etiquette</button>
+        <button id="etiquette" onclick="window.location.href = 'pdf_avant_vote.php'">Etiquette</button>
+        <button id="etiquette_resultat" onclick="window.location.href = 'pdf_prix.php'">Etiquette resultat</button>
         <button>Resultat</button>
       </class>
     </div>
