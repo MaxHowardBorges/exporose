@@ -63,6 +63,8 @@ $query4 = mysqli_query($db, "SELECT nom_variete from bouquet;");
 
 $query_ville = mysqli_query($db, "SELECT ville from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur;");
 
+$query_numero = mysqli_query($db, "SELECT id_bouquet from bouquet;");
+
 for ($i = 1; $i <= $bouquet; $i++) {
 	$row = mysqli_fetch_array($query2);
 	$nom = $row['nom_producteur'];
@@ -75,6 +77,9 @@ for ($i = 1; $i <= $bouquet; $i++) {
 
 	$row_ville = mysqli_fetch_array($query_ville);
 	$ville_bouquet = $row_ville['ville'];
+
+	$row_numero = mysqli_fetch_array($query_numero);
+	$numero_bouquet = $row_numero['id_bouquet'];
 
 	$pdf->setPrintHeader(true);
 	$pdf->AddPage();
@@ -105,7 +110,7 @@ for ($i = 1; $i <= $bouquet; $i++) {
 	$pdf->SetFont('times', '', 20);
 	$pdf->SetY($pdf->GetY() + 60);
 	$pdf->SetX($pdf->GetX() + -5);
-	$pdf->MultiCell(130, 5, '«Numéro»', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->MultiCell(130, 5, $numero_bouquet, 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
 }
 
 $pdf->Output();
