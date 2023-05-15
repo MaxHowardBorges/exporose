@@ -17,5 +17,8 @@ function createDbConnection() {
     if (!$db) {
         trigger_error('Impossible de se connecter à la base de données.', E_USER_ERROR);
     }
+    
+    mysqli_set_charset($db, "utf8");
+    
     return $db;
 }
