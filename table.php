@@ -44,6 +44,7 @@
                         $query = mysqli_query($db, "SELECT * FROM $table;");
                         while ($row = mysqli_fetch_assoc($query)) {
                             echo '<tr>';
+                            $newrow = explode(',', implode(',', $row));
                             foreach ($row as $value) {
                                 echo '<td>' . $value . '</td>';
                                 if ($value == reset($row)) {
@@ -51,9 +52,9 @@
                                     $columnsArray = explode(",", $columnss);
                                     $column = $columnsArray[0];
                                     echo '<input type="hidden" name="column" value=' . $column . '>';
-                                    echo '<input type="hidden" name="value" value=' . $value . '>';
                                 }
                             }
+                            echo '<input type="hidden" id=' . $newrow[0] . ' name="value" value="">';
                             // echo '<input type="hidden" name="values" value="' . implode(',', $row) . '">';
                             // echo '<input type="hidden" name="columns" value=' . $columnss . '>';
                             // echo '<td><button type="button" class="modif" onclick="openPopupTable(\'modif\')"><i class="fa-solid fa-pen"></i>Modifier</button></td>';
@@ -67,7 +68,7 @@
                             // echo '</div>';
                             // echo '</div>';
                             // echo '</div>';
-                            echo '<td><button type="button" class="supp" onclick="openPopupTable(\'supp\')"><i class="fa-solid fa-trash"></i>Supprimer</button></td>';
+                            echo '<td><button type="button" class="supp" onclick="openPopupTable(\'supp\',' . $newrow[0] . ')"><i class="fa-solid fa-trash"></i>Supprimer</button></td>';
                             echo '<div class="popup" id="popup">';
                             echo '<div class="popup-container">';
                             echo '<h2>Confirmation</h2>';
