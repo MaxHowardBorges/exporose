@@ -26,31 +26,40 @@
                     require_once "bd.php";
                     $db = createDbConnection();
                     $queryColumns = mysqli_query($db, "SHOW COLUMNS FROM $table;");
-                    $columns = '';
+                    $columnss = '';
                     while ($row = mysqli_fetch_assoc($queryColumns)) {
                         $column = $row['Field'];
                         echo '<th>' . $column . '</th>';
-                        $columns .= $column . ',';
+                        $columnss .= $column . ',';
                     }
-                    $columns = substr($columns, strpos($columns, ",") + 1, strlen($columns) - strpos($columns, ",") - 2);
+                    $columns = substr($columnss, strpos($columnss, ",") + 1, strlen($columnss) - strpos($columnss, ",") - 2);
                     ?>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $query = mysqli_query($db, "SELECT * FROM $table;");
-                while ($row = mysqli_fetch_assoc($query)) {
-                    echo '<tr>';
-                    foreach ($row as $value) {
-                        echo '<td>' . $value . '</td>';
+                <form action="supprimer.php" method="POST">
+                    <?php
+                    $query = mysqli_query($db, "SELECT * FROM $table;");
+                    while ($row = mysqli_fetch_assoc($query)) {
+                        echo '<tr>';
+                        foreach ($row as $value) {
+                            echo '<td>' . $value . '</td>';
+                            if ($value == reset($row)) {
+                                echo '<input type="hidden" name="table" value=' . $table . '>';
+                                $columnsArray = explode(",", $columnss);
+                                $column = $columnsArray[0];
+                                echo '<input type="hidden" name="column" value=' . $column . '>';
+                                echo '<input type="hidden" name="value" value=' . $value . '>';
+                            }
+                        }
+                        echo '<td><button>Modifier</button></td>';
+                        echo '<td><button type="submit" class="supp">Supprimer</button></td>';
+                        echo '</tr>';
                     }
-                    echo '<td><button>Modifier</button></td>';
-                    echo '<td><button class="supp">Supprimer</button></td>';
-                    echo '</tr>';
-                }
-                ?>
+                    ?>
+                </form>
                 <tr>
                     <td></td>
                     <form action="ajouter.php" method="POST">
