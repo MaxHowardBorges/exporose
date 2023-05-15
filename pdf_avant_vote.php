@@ -107,7 +107,7 @@ for ($i = 1; $i <= $bouquet; $i++) {
 	$pdf->setPrintHeader(false);
 	$pdf->AddPage();
 
-	$pdf->SetFont('times', '', 20);
+	$pdf->SetFont($fontName, 'U', 16);
 	$pdf->SetY($pdf->GetY() + 60);
 	$pdf->SetX($pdf->GetX() + -5);
 	$pdf->MultiCell(130, 5, $numero_bouquet, 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');

@@ -110,7 +110,7 @@ for ($i = 1; $i <= $prix; $i++) {
 	$pdf->setPrintHeader(false);
 	$pdf->AddPage();
 
-	$pdf->SetFont('times', '', 20);
+	$pdf->SetFont('arial', '', 20);
 	$pdf->SetY($pdf->GetY() + 60);
 	$pdf->SetX($pdf->GetX() + -5);
 	$pdf->MultiCell(130, 5, 'aaa', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
