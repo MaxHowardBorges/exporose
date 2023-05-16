@@ -56,33 +56,35 @@ $result = mysqli_fetch_array($query);
 $prix = $result[0];
 
 $query2 = mysqli_query($db, "SELECT nom_palmares FROM palmares;");
-/*
-$query3 = mysqli_query($db, "SELECT prenom_producteur from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur;");
 
-$query4 = mysqli_query($db, "SELECT nom_variete from bouquet;");
+$query_N = mysqli_query($db, "SELECT AVG(valeur_note) AS moyenne_note, id_bouquet FROM note GROUP BY id_bouquet ORDER BY moyenne_note DESC;");
 
-$query_ville = mysqli_query($db, "SELECT ville from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur;");
-
-$query_numero = mysqli_query($db, "SELECT id_bouquet from bouquet;");
-*/
 for ($i = 1; $i <= $prix; $i++) {
+
+	$info_classement = mysqli_fetch_array($query_N);
+
+    $classement = $info_classement['moyenne_note'];
+    $numero_bouquet = $info_classement['id_bouquet'];
+
+    //echo $numero_bouquet;
 
 	$row = mysqli_fetch_array($query2);
 	$palmares = $row['nom_palmares'];
 
-	/*
-	$row2 = mysqli_fetch_array($query3);
-	$prenom = $row2['prenom_producteur'];
+	$query_B = mysqli_query($db, "SELECT nom_producteur from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur AND $numero_bouquet=bouquet.id_bouquet;");
+    $query_prenom = mysqli_query($db, "SELECT prenom_producteur from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur AND $numero_bouquet=bouquet.id_bouquet;");
+    $query_ville = mysqli_query($db, "SELECT ville from producteur,bouquet WHERE producteur.id_producteur=bouquet.id_producteur AND $numero_bouquet=bouquet.id_bouquet;");
+    $query_variete = mysqli_query($db, "SELECT nom_variete from bouquet WHERE $numero_bouquet=id_bouquet;");
 
-	$row3 = mysqli_fetch_array($query4);
-	$variete = $row3['nom_variete'];
+    $info_3 = mysqli_fetch_array($query_B);
+    $info_4 = mysqli_fetch_array($query_prenom);
+    $info_5 = mysqli_fetch_array($query_ville);
+    $info_6 = mysqli_fetch_array($query_variete);
 
-	$row_ville = mysqli_fetch_array($query_ville);
-	$ville_bouquet = $row_ville['ville'];
-
-	$row_numero = mysqli_fetch_array($query_numero);
-	$numero_bouquet = $row_numero['id_bouquet'];
-	*/
+    $nom_prod = $info_3['nom_producteur'];
+    $prenom_prod = $info_4['prenom_producteur'];
+    $ville_bouquet = $info_5['ville'];
+    $variete_bouquet = $info_6['nom_variete'];
 
 	$pdf->setPrintHeader(true);
 	$pdf->AddPage();
@@ -97,15 +99,15 @@ for ($i = 1; $i <= $prix; $i++) {
 	$pdf->SetFont('times', '', 26);
 	$pdf->SetY($pdf->GetY() + 45);
 	$pdf->SetX($pdf->GetX() + -5);
-	$pdf->MultiCell(130, 5, '«Participant»', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->MultiCell(130, 5, $nom_prod.' '.$prenom_prod, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 	$pdf->SetFont('times', '', 30);
 	$pdf->SetY($pdf->GetY() + 30);
 	$pdf->SetX($pdf->GetX() + -5);
-	$pdf->MultiCell(130, 5, 'aaa', 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->MultiCell(130, 5, $variete_bouquet, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 	$pdf->SetFont('times', '', 20);
 	$pdf->SetY($pdf->GetY() + 30);
 	$pdf->SetX($pdf->GetX() + -5);
-	$pdf->MultiCell(130, 5, 'aaa', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->MultiCell(130, 5, $ville_bouquet, 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
 
 	$pdf->setPrintHeader(false);
 	$pdf->AddPage();
@@ -113,7 +115,7 @@ for ($i = 1; $i <= $prix; $i++) {
 	$pdf->SetFont('arial', '', 20);
 	$pdf->SetY($pdf->GetY() + 60);
 	$pdf->SetX($pdf->GetX() + -5);
-	$pdf->MultiCell(130, 5, 'aaa', 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+	$pdf->MultiCell(130, 5, $numero_bouquet, 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
 }
 
 $pdf->Output();
