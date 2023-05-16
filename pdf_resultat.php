@@ -14,24 +14,24 @@ class MYPDF extends TCPDF
         // Logo
         $this->Image('logo.png', 8, 3, 30);
         // Title
-        // set font
-        $this->SetFont('times', 'B', 16);
+		// set font
+		$this->SetFont('times', 'B', 16);
 
-        // set color for background
-        $this->SetFillColor(255, 255, 255);
+		// set color for background
+		$this->SetFillColor(255, 255, 255);
 
-        $this->SetY($this->GetY() + 5);
-        $this->SetX($this->GetX() + 25);
-        $this->MultiCell(100, 5, 'PALMARES EXPO ROSE 2023', 0, '', 1, 0, '', '', true, 0, false, false, 40, '');
-        $this->SetY($this->GetY() + 7);
-        $this->SetX($this->GetX() + 25);
-        $this->MultiCell(150, 5, '51ème Exposition Internationale de Roses', 0, '', 1, 0, '', '', true, 0, false, false, 40, '');
+		$this->SetY($this->GetY() + 5);
+		$this->SetX($this->GetX() + 25);
+		$this->MultiCell(100, 5, 'PALMARES EXPO ROSE 2023', 0, '', 1, 0, '', '', true, 0, false, false, 40, '');
+		$this->SetY($this->GetY() + 7);
+		$this->SetX($this->GetX() + 25);
+		$this->MultiCell(150, 5, '51ème Exposition Internationale de Roses', 0, '', 1, 0, '', '', true, 0, false, false, 40, '');
     }
 
-    public function Footer() {
+	public function Footer() {
         // Positionnement à 1,5 cm du bas
         $this->SetY(-15);
-        $this->SetX(150);
+		$this->SetX(150);
         // Police Arial italique 8
         $this->SetFont('times', '', 10);
         // Numéro de page
@@ -73,40 +73,56 @@ $pdf->Line($pdf->GetX()-5, $pdf->GetY()+4, $pdf->GetX()+125, $pdf->GetY()+4); //
 $pdf->SetLineWidth(0.2); // définit l'épaisseur de la ligne
 
 
-for($i=1;$i=9;$i++){
-
-    $queryP = mysqli_query($db, "SELECT nom_palmares FROM palmares;");
-
-    $queryN = mysqli_query($db, "SELECT id_bouquet, AVG(valeur_note) AS moyenne_note FROM note GROUP BY id_bouquet ORDER BY moyenne_note DESC;");
 
 
-    $row = mysqli_fetch_array($queryN);
-    $note = $row['valeur_note'];
-    $bouquet = $row['id_bouquet'];
+    $query_P = mysqli_query($db, "SELECT nom_palmares FROM palmares;");
 
-    $row2 = mysqli_fetch_array($queryP);
-    $prix = $row2['nom_palmares'];
+    $query_N = mysqli_query($db, "SELECT AVG(valeur_note) AS moyenne_note, id_bouquet FROM note GROUP BY id_bouquet ORDER BY moyenne_note DESC;");
+    
 
-    $queryB = mysqli_query($db, "SELECT b.id_bouquet, b.nom_variete, b.id_producteur, p.nom_producteur, p.prenom_producteur, p.ville FROM bouquet b JOIN producteur p ON b.id_producteur = p.id_producteur;");
+    $info_classement = mysqli_fetch_array($query_N);
 
-    $row3 = mysqli_fetch_array($queryB);
 
-    $nom = $row3['nom_producteur'];
-    $prenom = $row3['prenom_producteur'];
-    $ville = $row3['ville'];
-    $variete = $row3['nom_variete'];
+
+    $note_bouquet = $info_classement['moyenne_note'];
+    $numero_bouquet = $info_classement['id_bouquet'];
+
+    //echo $note_bouquet;
+
+    //echo $numero_bouquet;
+
+    $info_2 = mysqli_fetch_array($query_P);
+
+    $prix_palmares = "1 ";
+    $prix_palmares .= $info_2['nom_palmares'];
+
+    //echo $prix_palmares;
+    
+    $query_B = mysqli_query($db, "SELECT b.id_bouquet, b.nom_variete, b.id_producteur, p.nom_producteur, p.prenom_producteur, p.ville FROM bouquet b JOIN producteur p ON b.id_producteur = p.id_producteur;");
+
+    //$info_3 = mysqli_fetch_array($query_B);
+
+    /*$nom_prod = $info_3['nom_producteur'];
+    $prenom_prod = $info_3['prenom_producteur'];
+    $ville_bouquet = $info_3['ville'];
+    $variete_bouquet = $info_3['nom_variete'];*/
+
+    /*echo $nom_prod;
+    echo $prenom_prod;
+    echo $ville_bouquet;
+    echo $variete_bouquet;*/
 
     $pdf->SetFont('times', 'B', 12);
     $pdf->SetY($pdf->GetY() + 12);
     $pdf->SetX($pdf->GetX() + -5);
-    $pdf->MultiCell(130, 5, $prix[$i], 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+    $pdf->MultiCell(130, 5, $prix_palmares, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
     $pdf->SetFont('times', 'B', 15);
     $pdf->SetY($pdf->GetY() + 6);
     $pdf->SetX($pdf->GetX() + -8);
-    $pdf->MultiCell(50, 5, 'Participant', 1, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+    $pdf->MultiCell(50, 5, 'Participant', 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
     $pdf->SetFont('times', 'B', 15);
     $pdf->SetX($pdf->GetX() + 0);
-    $pdf->MultiCell(45, 5, 'Ville', 1, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
+    $pdf->MultiCell(45, 5, 'Ville', 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
     $pdf->SetFont('times', 'B', 15);
     $pdf->SetX($pdf->GetX() + 0);
     $pdf->MultiCell(40, 5, 'Variété', 1, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
@@ -114,25 +130,16 @@ for($i=1;$i=9;$i++){
     $pdf->SetFont('times', 'B', 13);
     $pdf->SetY($pdf->GetY() + 6);
     $pdf->SetX($pdf->GetX() + -8);
-    $pdf->MultiCell(50, 5, $nom[0], 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+    $pdf->MultiCell(50, 5, 'CONSTANT Gilbert', 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
     $pdf->SetFont('times', 'B', 13);
     $pdf->SetX($pdf->GetX() + 0);
-    $pdf->MultiCell(45, 5, $ville[0], 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
+    $pdf->MultiCell(45, 5, 'Antibes', 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
     $pdf->SetFont('times', 'B', 13);
     $pdf->SetX($pdf->GetX() + 0);
-    $pdf->MultiCell(40, 5, $variete[0], 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
-
-}
-
-//$pdf->setPrintHeader(true);
-//$pdf->AddPage();
-
-// set color for background
-$pdf->SetFillColor(255, 255, 255);
+    $pdf->MultiCell(40, 5, 'TWINGO', 1, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
 
 
-$pdf->setPrintHeader(false);
-
+    $pdf->setPrintHeader(false);
 
 $pdf->Output();
 ?>
