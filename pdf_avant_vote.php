@@ -5,6 +5,11 @@ require_once "bd.php";
 
 $db = createDbConnection();
 
+$fontPath = K_PATH_FONTS . 'arial.ttf';
+$fontPath2 = K_PATH_FONTS . 'ComicSansMS3.ttf';
+$fontName = TCPDF_FONTS::addTTFfont($fontPath);
+$fontName2 = TCPDF_FONTS::addTTFfont($fontPath2);
+
 class MYPDF extends TCPDF
 {
 	public function Header()
@@ -66,6 +71,7 @@ $query_ville = mysqli_query($db, "SELECT ville from producteur,bouquet WHERE pro
 $query_numero = mysqli_query($db, "SELECT id_bouquet from bouquet;");
 
 for ($i = 1; $i <= $bouquet; $i++) {
+
 	$row = mysqli_fetch_array($query2);
 	$nom = $row['nom_producteur'];
 
@@ -95,7 +101,7 @@ for ($i = 1; $i <= $bouquet; $i++) {
 	$pdf->SetY($pdf->GetY() + 30);
 	$pdf->SetX($pdf->GetX() + -5);
 	$pdf->MultiCell(130, 5, $prenom, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
-	$pdf->SetFont('times', '', 30);
+	$pdf->SetFont($fontName2, '', 30);
 	$pdf->SetY($pdf->GetY() + 30);
 	$pdf->SetX($pdf->GetX() + -5);
 	$pdf->MultiCell(130, 5, $variete, 0, 'C', 1, 0, '', '', true, 0, false, false, 40, '');
@@ -107,7 +113,7 @@ for ($i = 1; $i <= $bouquet; $i++) {
 	$pdf->setPrintHeader(false);
 	$pdf->AddPage();
 
-	$pdf->SetFont('times', '', 20);
+	$pdf->SetFont($fontName, '', 16);
 	$pdf->SetY($pdf->GetY() + 60);
 	$pdf->SetX($pdf->GetX() + -5);
 	$pdf->MultiCell(130, 5, $numero_bouquet, 0, 'C', 0, 0, '', '', true, 0, false, false, 40, '');
