@@ -3,6 +3,8 @@
 require_once('TCPDF/tcpdf.php');
 require_once "bd.php";
 
+//finale
+
 $db = createDbConnection();
 
 class MYPDF extends TCPDF
