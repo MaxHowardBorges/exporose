@@ -32,7 +32,7 @@
       <class id="buttons2">
         <button id="etiquette" onclick="window.location.href = 'pdf_avant_vote.php'">Etiquette</button>
         <button id="etiquette_resultat" onclick="window.location.href = 'pdf_prix.php'">Etiquette resultat</button>
-        <button>Resultat</button>
+        <button id="pdf_resultat" onclick="window.location.href = 'pdf_resultat.php'">Resultat</button>
       </class>
     </div>
   </div>
